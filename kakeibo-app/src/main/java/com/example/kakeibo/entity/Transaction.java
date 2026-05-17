@@ -1,6 +1,7 @@
 package com.example.kakeibo.entity;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,6 +26,7 @@ public class Transaction {
     private String memo;
     
     private String userName;
+    private LocalDateTime createdAt;
 
     public Long getId() {
         return id;
@@ -79,5 +81,12 @@ public class Transaction {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 }

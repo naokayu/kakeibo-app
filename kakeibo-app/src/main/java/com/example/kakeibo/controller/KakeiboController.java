@@ -1,6 +1,7 @@
 package com.example.kakeibo.controller;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.util.List;
 import java.util.Map;
@@ -89,8 +90,15 @@ public class KakeiboController {
 
     @PostMapping("/save")
     public String save(@ModelAttribute Transaction transaction) {
+
+        if (transaction.getCreatedAt() == null) {
+            transaction.setCreatedAt(LocalDateTime.now());
+        }
+
         transactionRepository.save(transaction);
+
         return "redirect:/";
+    
     }
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable Long id, Model model) {
