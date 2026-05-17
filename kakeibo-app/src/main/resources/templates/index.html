@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>家計簿アプリ</title>
+	<link rel="stylesheet" th:href="@{/style.css}">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+	<div class="container">
+    <h1>家計簿一覧</h1>
+	<a href="/new">新規登録</a>
+	<form action="/" method="get">
+	    <input type="month" name="month" th:value="${selectedMonth}">
+	    <button type="submit">検索</button>
+	</form>
+	<div class="summary">
+		<p>収入合計：<span th:text="${incomeTotal}">0</span> 円</p>
+		<p>支出合計：<span th:text="${expenseTotal}">0</span> 円</p>
+		<p>残高：<span th:text="${balance}">0</span> 円</p>
+		
+	</div>
+	<div class="chart-box">
+	    <h2>カテゴリ別支出</h2>
+	    <canvas id="categoryChart"></canvas>
+	</div>
+
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>日付</th>
+            <th>種別</th>
+            <th>カテゴリ</th>
+            <th>金額</th>
+            <th>メモ</th>
+			<th>登録者</th>
+			<th>操作</th>
+        </tr>
+
+        <tr th:each="transaction : ${transactions}">
+            <td th:text="${transaction.id}"></td>
+            <td th:text="${transaction.date}"></td>
+            <td th:text="${transaction.type}"></td>
+            <td th:text="${transaction.category}"></td>
+            <td th:text="${transaction.amount}"></td>
+            <td th:text="${transaction.memo}"></td>
+			<td th:text="${transaction.userName}"></td>
+			<td>
+			    <a th:href="@{/edit/{id}(id=${transaction.id})}">編集</a>
+			    <a th:href="@{/delete/{id}(id=${transaction.id})}">削除</a>
+			</td>
+        </tr>
+    </table>
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+	<script th:inline="javascript">
+		const labels = /*[[${categoryLabels}]]*/ [];
+		const values = /*[[${categoryValues}]]*/ [];
+	    console.log(labels);
+	    console.log(values);
+
+	    const ctx = document.getElementById('categoryChart');
+
+	    new Chart(ctx, {
+	        type: 'pie',
+	        data: {
+	            labels: labels,
+	            datasets: [{
+	                label: 'カテゴリ別支出',
+	                data: values
+	            }]
+	        }
+	    });
+	</script>
+</body>
+</html>

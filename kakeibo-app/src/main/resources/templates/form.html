@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>登録画面</title>
+</head>
+<body>
+
+<h1>家計簿登録</h1>
+
+<form th:action="@{/save}" th:object="${transaction}" method="post">
+	<input type="hidden" th:field="*{id}">
+    <div>
+        日付：
+        <input type="date" th:field="*{date}">
+    </div>
+
+    <div>
+        種別：
+        <select th:field="*{type}">
+            <option value="収入">収入</option>
+            <option value="支出">支出</option>
+        </select>
+    </div>
+
+	<div>
+	    カテゴリ：
+	    <select th:field="*{category}">
+	        <option value="食費">食費</option>
+	        <option value="飲み物">飲み物</option>
+	        <option value="交通費">交通費</option>
+	        <option value="日用品">日用品</option>
+	        <option value="通信費">通信費</option>
+	        <option value="家賃">家賃</option>
+	        <option value="光熱費">光熱費</option>
+	        <option value="娯楽">娯楽</option>
+	        <option value="給料">給料</option>
+	        <option value="その他">その他</option>
+	    </select>
+	</div>
+
+    <div>
+        金額：
+        <input type="number" th:field="*{amount}">
+    </div>
+	<div>
+	    登録者：
+	    <select th:field="*{userName}">
+	        <option value="自分">自分</option>
+	        <option value="妻">妻</option>
+	    </select>
+	</div>
+    <div>
+        メモ：
+        <input type="text" th:field="*{memo}">
+    </div>
+
+    <button type="submit">登録</button>
+
+</form>
+
+</body>
+</html>
